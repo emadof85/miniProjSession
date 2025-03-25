@@ -71,6 +71,7 @@ To use this repository, follow these steps:
    - Update the connection string in the project's configuration file (e.g., appsettings.json) to match your database setup.
    - Apply migrations to set up the database schema:
      ```bash
-     dotnet ef database update
+     dotnet ef database update -c IdentityAppDbContext
+     dotnet ef database update -c TourAgencyDbContext
 5. **Build and run the project**.
     
