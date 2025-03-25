@@ -33,10 +33,13 @@ namespace DataAccess.Entities
         [Column("transactionDate", TypeName = "datetime2(7)")]
         public DateTime TransactionDate { get; set; }
 
-        [Column("paymentId")]
+        [Required, Column("paymentId")]
+        public int PaymentId { get; set; }
+
         public Payment? Payment { get; set; }
 
         [Column("paymentMethodId")]
-        public PaymentMethod? PaymentMethod { get; set; }
+        public int PaymentMethodId { get; set; }
+        public PaymentMethod? PaymentMethod { get; set; } // for navigation only
     }
 }

@@ -1,4 +1,7 @@
+using DataAccess.Contexts;
 using DataAccess.Entities;
+using DataAccess.IRepositories;
+using DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<TourAgencyDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<IdentityAppDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

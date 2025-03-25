@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Entities
+namespace DataAccess.Contexts
 {
     public partial class TourAgencyDbContext:DbContext
     {
@@ -14,6 +15,8 @@ namespace DataAccess.Entities
         public  DbSet<Payment> Payments { get; set; }
         public  DbSet<PaymentMethod> PaymentMethods { get; set; }
         public  DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public TourAgencyDbContext(DbContextOptions<TourAgencyDbContext> options)
             :base(options)
@@ -37,6 +40,12 @@ namespace DataAccess.Entities
                 .Property(e => e.TransactionType)
                 .HasConversion<string>()
                 .HasColumnType("nvarchar(10)");
+            modelBuilder.Entity<PaymentTransaction>()
+                .HasIndex(p => new { p.PaymentId, p.PaymentMethodId, p.TransactionDate })
+                .IsUnique(true);
+
+            modelBuilder.Entity<Customer>().ToTable("Customers");
+            modelBuilder.Entity<Employee>().ToTable("Employees");
         }
     }
 }
